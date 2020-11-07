@@ -19,7 +19,7 @@ class Run implements Runnable{
         byte[] b1=new byte[1024];
         int l = 0;
         try {
-            l = in.read(b1, 0, 10);      //第一个参数是储存所在的数组，第二个参数是结束的位置，第三个是总长度
+            l = in.read(b1, 0, 10);      
             //b1储存了1-10所有的数据
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,7 +34,7 @@ class Run implements Runnable{
 
         System.out.println(Thread.currentThread().getName()+":"+new String(b1, start,5 ));
 
-        /*第off个结束，从头开始计算第length个数值*/
+        
         /******************************************************************************/
 
         /*输出*/
