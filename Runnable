@@ -1,0 +1,65 @@
+import java.io.*;
+class Run implements Runnable{
+
+     public int start = 0;
+    @Override
+    public void run() {
+
+        /*输入*/
+        String fileName1 = "Z:" + File.separator + "Passage1.txt";
+        File f1 = new File(fileName1);
+        InputStream in = null;
+        try {
+            in = new FileInputStream(f1);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        byte[] b1=new byte[1024];
+        int l = 0;
+        try {
+            l = in.read(b1, 0, 10);      //第一个参数是储存所在的数组，第二个参数是结束的位置，第三个是总长度
+            //b1储存了1-10所有的数据
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(Thread.currentThread().getName()+":"+new String(b1, start,5 ));
+
+        /*第off个结束，从头开始计算第length个数值*/
+        /******************************************************************************/
+
+        /*输出*/
+        String fileName2 = "Z:"+File.separator+"Passage2.txt";
+        File f2 = new File(fileName2);
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream(f2);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            out.write(b1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void change_start (int start){
+        this.start = start;
+    }
+}
