@@ -1,0 +1,13 @@
+public class Test2 {
+    public static void main(String[] args) {
+        Run r1 = new Run();
+        Run r2 = new Run();
+        Thread thread1 = new Thread(r1,"线程一");
+        thread1.start();
+
+        r2.change_start(5);
+
+        Thread thread2 = new Thread(r2,"线程二");
+        thread2.start();
+
+    }
