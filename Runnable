@@ -1,12 +1,23 @@
 import java.io.*;
+
+
 class Run implements Runnable{
 
-     public int start = 0;
+    private int length;
+    //private int off = 0;
+    private byte[] a;
+    //private byte[] b;
+    private int x = 0;
+    String fileName1 = "Z:" + File.separator + "Passage1.txt";
+    String fileName2 = "Z:" + File.separator + "temp" + File.separator +"Passage2.txt";
+    String fileName3 = "Z:" + File.separator + "temp" + File.separator +"Passage3.txt";
+
+    public void change_x(int x){this.x = x;}
+    public void chang_file(){fileName2 = fileName3;}
+
     @Override
     public void run() {
-
         /*输入*/
-        String fileName1 = "Z:" + File.separator + "Passage1.txt";
         File f1 = new File(fileName1);
         InputStream in = null;
         try {
@@ -15,30 +26,44 @@ class Run implements Runnable{
             e.printStackTrace();
         }
 
+        length = (int)f1.length();      /*文件的大小*/
+        //System.out.println(length);
 
-        byte[] b1=new byte[1024];
-        int l = 0;
+        byte[] b1=new byte[length];
+
         try {
-            l = in.read(b1, 0, 10);      
-            //b1储存了1-10所有的数据
+            in.read(b1, 0, b1.length);    /*储存了文本所有的值*/
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
         try {
             in.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        a=new byte[length/2];
 
-        System.out.println(Thread.currentThread().getName()+":"+new String(b1, start,5 ));
+        if(x==0) {
+            for (int i = 0; i < length/2; i++) {
+                a[i] = b1[i];
+            }
+        }
 
-        
+        if(x==1) {
+            for (int i = 0; i < length/2; i++) {
+                a[i] = b1[length/2 + i];
+            }
+        }
+
+
+
+        System.out.println(Thread.currentThread().getName()+":"+new String(a));
+
+
         /******************************************************************************/
 
         /*输出*/
-        String fileName2 = "Z:"+File.separator+"Passage2.txt";
         File f2 = new File(fileName2);
         OutputStream out = null;
         try {
@@ -48,7 +73,7 @@ class Run implements Runnable{
         }
 
         try {
-            out.write(b1);
+            out.write(a);                  /*将b1打印到txt文本中*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,9 +82,8 @@ class Run implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
-    public void change_start (int start){
-        this.start = start;
-    }
 }
