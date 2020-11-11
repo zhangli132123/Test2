@@ -1,13 +1,35 @@
-public class Test2 {
-    public static void main(String[] args) {
+public class Test {
+    public static void main(String[] args) throws IOException {
         Run r1 = new Run();
-        Run r2 = new Run();
-        Thread thread1 = new Thread(r1,"线程一");
+        Thread thread1 = new Thread(r1, "线程一");
         thread1.start();
 
-        r2.change_start(5);
-
-        Thread thread2 = new Thread(r2,"线程二");
+        Run r2 = new Run();
+        r2.change_x(1);
+        r2.chang_file();
+        Thread thread2 = new Thread(r2, "线程二");
         thread2.start();
 
+        //定义输出目录
+        String FileOut="Z:\\final\\final.txt";
+        BufferedWriter bw=new BufferedWriter(new FileWriter(FileOut));
+
+        //读取目录下的每个文件或者文件夹，并读取文件的内容写到目标文字中去
+        File[] list = new File("Z:\\temp").listFiles();
+
+        for(File file : list)
+        {
+            if(file.isFile())
+            {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while((line=br.readLine())!=null) {
+                    bw.write(line);
+                }
+                br.close();
+            }
+        }
+        bw.close();
+
+        }
     }
